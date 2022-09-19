@@ -22,4 +22,5 @@ Route::post('register', 'App\Http\Controllers\UserController@register');
 Route::post('login', 'App\Http\Controllers\UserController@login');
 Route::post('logout', 'App\Http\Controllers\UserController@logout');
 Route::post('/forgot-password', 'App\Http\Controllers\PasswordResetRequestController@sendEmail');
+Route::post('/reset-password', 'App\Http\Controllers\ChangePasswordController@passwordResetProcess');
 // Route::post('login', 'UserController@login');
