@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\User;
+// use JWTAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +19,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('send-mail', function () {
-   
+Route::get('/forgot-password/{email}', function ($email) {
+    $user = User::firstWhere('email', $email);
+    $token = JWTAuth::fromUser($user);
+
     $details = [
-        'title' => 'Perkenalkan Nama saya Sauzan',
-        'body' => "Saya Seorang Programmer Pemula"
+        'title' => 'Halo ' . $user->name,
+        'body' => 'Gunakan link ini untuk resert passwordmu ' . $token,
     ];
-   
-    \Mail::to(']@gmail.com')->send(new \App\Mail\MyTestMail($details));
-   
-    dd("Email Sudah Terkirim.");
+
+    \Mail::to($email)->send(new \App\Mail\MyTestMail($details));
+
+    dd('Email Sudah Terkirim.');
 });
